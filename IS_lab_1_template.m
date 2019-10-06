@@ -70,63 +70,85 @@ x2=[metric_A1 metric_A2 metric_A3 metric_P1 metric_P2];
 P=[x1;x2];
 
 %Desired output vector
-T=[1;-1;-1;1;-1];
+T=[1;1;1;-1;-1];
 
 %% train single perceptron with two inputs and one output
 
 % generate random initial values of w1, w2 and b
+% w1 = 0.0727107340264008;
+% w2 = 0.581546785136697;
+% b = -0.489915295620902;
 w1 = randn(1);
 w2 = randn(1);
 b = randn(1);
 
 % calculate wieghted sum with randomly generated parameters
 %v1 = <...>; % write your code here
-% calculate current output of the perceptron 
-if v > 0
-	y = 1;
-else
-	y = -1;
+v = (5);
+e = (5);
+for i=1:5
+    v(i) = x1(i) * w1 + x2(i) * w2 + b;
+    % calculate current output of the perceptron 
+    if v(i) > 0
+        y = 1;
+    else
+        y = -1;
+    end
+    % calculate the error
+    e(i) = T(i) - y;
 end
+% v1 = hsv_value_A1 * w1 + metric_A1 * w2 + b;
+% % calculate current output of the perceptron 
+% if v1 > 0
+% 	y = 1;
+% else
+% 	y = -1;
+% end
+% % calculate the error
+% e1 = T(1) - y;
+% 
+% 
+% 
+% % repeat the same for the rest 4 inputs x1 and x2
+% % calculate wieghted sum with randomly generated parameters
+% % v2 = <...> ; % write your code here
+% % calculate current output of the perceptron 
+% if v > 0
+% 	y = 1;
+% else
+% 	y = -1;
+% end
 % calculate the error
-e1 = T(1) - y;
-
-% repeat the same for the rest 4 inputs x1 and x2
-% calculate wieghted sum with randomly generated parameters
-% v2 = <...> ; % write your code here
-% calculate current output of the perceptron 
-if v > 0
-	y = 1;
-else
-	y = -1;
-end
-% calculate the error
-e2 = T(2) - y;
 
 % <...> write the code for another 3 inputs
 
 % calculate the total error for these 5 inputs 
-e = abs(e1) + abs(e2) + abs(e3) + abs(e4) + abs(e5);
-
+e_final = abs(e(1)) + abs(e(2)) + abs(e(3)) + abs(e(4)) + abs(e(5));
+counter = 0;
 % write training algorithm
-while e ~= 0 % executes while the total error is not 0
-	% here should be your code of parameter update
-%   calculate output for current example
-% 
-%   calculate error for current example
-% 
-%   update parameters using current inputs ant current error
-% 	w1 = 
-%   w2 = 
-%   b = 
-% 
-%   Test how good are updated parameters (weights) on all examples used for training
-%   calculate outputs and errors for all 5 examples using current values of the parameter set {w1, w2, b}
-%   calculate 'v1', 'v2', 'v3',... 'v5'
-% 
-%   calculate 'y1', ..., 'y5'
-%     
-%   calculate 'e1', ... 'e5'
+while e_final ~= 0 % executes while the total error is not 0
+    counter = counter + 1;
+    eta = 0.05;
     
-	% calculate the total error for these 5 inputs 
-	e = abs(e1) + abs(e2) + abs(e3) + abs(e4) + abs(e5);
+    for j=1:5
+        w1 = w1+ eta * e(j) * x1(j);
+        w2 = w2+ eta * e(j) * x2(j);
+        b = b + eta * e(j);
+    
+        for i=1:5
+            v(i) = x1(i) * w1 + x2(i) * w2 + b;
+            % calculate current output of the perceptron 
+            if v(i) > 0
+                y = 1;
+            else
+                y = -1;
+            end
+            % calculate the error
+            e(i) = T(i) - y;
+            T(i);
+        end
+        
+    e_final = abs(e(1)) + abs(e(2)) + abs(e(3)) + abs(e(4)) + abs(e(5));
+    
+    end
 end
