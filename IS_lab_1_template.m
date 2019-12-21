@@ -125,10 +125,11 @@ end
 % calculate the total error for these 5 inputs 
 e_final = abs(e(1)) + abs(e(2)) + abs(e(3)) + abs(e(4)) + abs(e(5));
 counter = 0;
+counter2 = 0;
 % write training algorithm
 while e_final ~= 0 % executes while the total error is not 0
     counter = counter + 1;
-    eta = 0.05;
+    eta = 0.005;
     
     for j=1:5
         w1 = w1+ eta * e(j) * x1(j);
@@ -136,6 +137,7 @@ while e_final ~= 0 % executes while the total error is not 0
         b = b + eta * e(j);
     
         for i=1:5
+            counter2 = counter2 + 1;
             v(i) = x1(i) * w1 + x2(i) * w2 + b;
             % calculate current output of the perceptron 
             if v(i) > 0
